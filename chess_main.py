@@ -19,9 +19,17 @@ def load_images() -> None:
 
     for piece in pieces:
         IMAGES[piece] = pg.transform.scale(pg.image.load("images/" + piece + ".png").convert,
-        (SQ_SIZE, SQ_SIZE))    
+        (SQ_SIZE, SQ_SIZE))
 
-def main():
+def draw_gamestate(screen: pg.Surface, gs: chess_engine.GameState) -> None:
+    """Draw onto the screen the entire current game"""
+
+    draw_board(screen) # draw the chessboard
+    draw_pieces(screen, gs.board) # draw the chesspieces on the board
+
+
+
+def main() -> None:
     """The main method, the actual run function"""
 
     pg.init()
@@ -36,6 +44,7 @@ def main():
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 running = False
+        draw_gamestate(screen, gs)
         clock.tick(FPS)
         pg.display.flip()
 
