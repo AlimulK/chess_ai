@@ -5,10 +5,10 @@ for determining valid moves for the current state and a history of the moves tak
 import numpy as np
 
 class GameState():
-    """Class for the game state, initialises the board."""
+    """Class for the game state."""
 
     def __init__(self) -> None:
-        """Sets up the board
+        """Sets up the board, whose move it is and a movelog
 
         Sets up the board as an 8x8 Numpy 2d array. Each piece is represented by 2 characters,
         the first character represents the colour, second character represents piece:
@@ -25,3 +25,7 @@ class GameState():
             ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
             ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
         ])
+
+        self.white_to_move: bool = True
+
+        self.movelog = []
