@@ -1,7 +1,7 @@
 """Responsible for user input and displaying the current GameState,
 basically the user's interface with the game
 """
-
+# Imports
 import pygame as pg
 import chess_engine
 
@@ -12,14 +12,16 @@ SQ_SIZE = HEIGHT // DIMENSION
 FPS = 15
 IMAGES = {}
 
+
 def load_images() -> None:
     """Fill the IMAGES dictionary with the pieces"""
 
-    pieces = ["wP", "bP", "wR", "bR", "wN", "bN", "wQ", "bQ", "wK", "bK"]
+    pieces = ["wP", "bP", "wR", "bR", "wN", "bN", "wB", "bB", "wQ", "bQ", "wK", "bK"]
 
     for piece in pieces:
-        IMAGES[piece] = pg.transform.scale(pg.image.load("images/" + piece + ".png").convert,
+        IMAGES[piece] = pg.transform.scale(pg.image.load("images/" + piece + ".png"),
         (SQ_SIZE, SQ_SIZE))
+
 
 def draw_gamestate(screen: pg.Surface, gs: chess_engine.GameState) -> None:
     """Draw onto the screen the entire current game"""
@@ -28,12 +30,36 @@ def draw_gamestate(screen: pg.Surface, gs: chess_engine.GameState) -> None:
     draw_pieces(screen, gs.board) # draw the chesspieces on the board
 
 
+def draw_board(screen: pg.Surface) -> None:
+    """Draw the squares of the board onto the screen
+    
+    The light squares will be even, 0 is even, and the dark squares are all odd,
+    so just need to modulo 2 to check if a square is odd or even and then colour it in
+    """
+
+    colours = [pg.Color("white"), pg.Color("gray")] # TODO make this configurable
+    for i in range(DIMENSION):
+        for j in range(DIMENSION):
+            colour = colours[((i + j) % 2)]
+            pg.draw.rect(screen, colour, pg.Rect(j*SQ_SIZE, i*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+
+def draw_pieces(screen: pg.Surface, board) -> None:
+    """Draw the pieces onto the board"""
+
+    for i in range(DIMENSION):
+        for j in range(DIMENSION):
+            piece = board[i][j]
+            if piece != "--":
+                screen.blit(IMAGES[piece], pg.Rect(i*SQ_SIZE, j*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
 
 def main() -> None:
     """The main method, the actual run function"""
 
     pg.init()
     screen = pg.display.set_mode((WIDTH, HEIGHT))
+    pg.display.set_caption("Chess")
     clock = pg.time.Clock()
     screen.fill(pg.Color("white"))
     gs = chess_engine.GameState()

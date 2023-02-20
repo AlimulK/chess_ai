@@ -1,8 +1,9 @@
 """Responsible for storing the current game's information,
 for determining valid moves for the current state and a history of the moves taken
 """
-
+# Imports
 import numpy as np
+
 
 class GameState():
     """Class for the game state."""
