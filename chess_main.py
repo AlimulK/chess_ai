@@ -51,7 +51,7 @@ def draw_pieces(screen: pg.Surface, board) -> None:
         for j in range(DIMENSION):
             piece = board[i][j]
             if piece != "--":
-                screen.blit(IMAGES[piece], pg.Rect(i*SQ_SIZE, j*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+                screen.blit(IMAGES[piece], pg.Rect(j*SQ_SIZE, i*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 
 def main() -> None:
