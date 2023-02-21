@@ -33,7 +33,18 @@ class GameState():
 
 
 class Move():
-    """A class for moving the pieces"""
+    """A class for moving the pieces and chess notation"""
+
+    # Maps keys to values, ranks and files special chess words for same thing
+    ranks_to_rows = {"1": 7, "2": 6, "3": 5, "4": 4,
+                    "5": 3, "6": 2, "7": 1, "8": 0}
+    
+    rows_to_ranks = {v: k for k, v in ranks_to_rows.items()}
+
+    files_to_cols = {"a": 0, "b": 1, "c": 2, "d": 3,
+                    "e": 4, "f": 5, "g": 6, "h":7}
+    
+    cols_to_files = {v: k for k, v in files_to_cols.items()}
 
     def __init__(self, start_sq: tuple[int, int], end_sq: tuple[int, int], board):
         """Setup all the coordinate stuff"""
