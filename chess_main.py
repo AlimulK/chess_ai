@@ -82,7 +82,11 @@ def main() -> None:
                 else:
                     sq_selected = (row, col)
                     player_clicks.append(sq_selected)
-                # if len(player_clicks) == 2:
+                if len(player_clicks) == 2:
+                    move = chess_engine.Move(player_clicks[0], player_clicks[1], gs.board)
+                    gs.make_move(move)
+                    sq_selected = () # Reset
+                    player_clicks = [] # Reset
 
         draw_gamestate(screen, gs)
         clock.tick(FPS)
