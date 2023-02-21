@@ -56,4 +56,10 @@ class Move():
         self.piece_moved = board[self.start_row][self.start_col]
         self.piece_captured = board[self.end_row][self.end_col]
 
+
+    def get_chess_notation(self):
+        return self.get_rank_file(self.start_row, self.start_col) + self.get_rank_file(self.end_row, self.end_col)
     
+
+    def get_rank_file(self, r, c):
+        return self.cols_to_files[c] + self.rows_to_ranks[r]
