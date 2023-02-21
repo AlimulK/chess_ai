@@ -55,7 +55,7 @@ def draw_pieces(screen: pg.Surface, board) -> None:
 
 
 def main() -> None:
-    """The main method, the actual run function"""
+    """The main method, the actual runable function"""
 
     pg.init()
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -65,11 +65,25 @@ def main() -> None:
     gs = chess_engine.GameState()
     load_images() # Image loading is expensive so only do once
     running = True
+    sq_selected = () # Keeps track of the last click
+    player_clicks = [] # Keeps track of the last clicks
 
     while running:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 running = False
+            elif e.type == pg.MOUSEBUTTONDOWN:
+                location = pg.mouse.get_pos()
+                col = location[0] // SQ_SIZE
+                row = location[1] // SQ_SIZE
+                if sq_selected == (row, col): # Same square, deselect
+                    sq_selected = ()
+                    player_clicks = []
+                else:
+                    sq_selected = (row, col)
+                    player_clicks.append(sq_selected)
+                # if len(player_clicks) == 2:
+
         draw_gamestate(screen, gs)
         clock.tick(FPS)
         pg.display.flip()
