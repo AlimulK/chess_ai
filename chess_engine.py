@@ -30,10 +30,17 @@ class GameState():
         self.white_to_move: bool = True
 
         self.movelog = []
+    
+
+    def make_move(self, move):
+        self.board[move.start_row][move.start_col] = "--"
+        self.board[move.end_row][move.end_col] = move.piece_moved
+        self.movelog.append(move) # Add to log
+        self.white_to_move = not self.white_to_move # Swap turn
 
 
 class Move():
-    """A class for moving the pieces and chess notation"""
+    """A class for moving the pieces and chess notation convertions"""
 
     # Maps keys to values, ranks and files special chess words for same thing
     ranks_to_rows = {"1": 7, "2": 6, "3": 5, "4": 4,
