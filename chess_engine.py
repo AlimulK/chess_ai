@@ -33,10 +33,19 @@ class GameState():
     
 
     def make_move(self, move):
+        """This doesn't work for special moves, like castling or en passant"""
         self.board[move.start_row][move.start_col] = "--"
         self.board[move.end_row][move.end_col] = move.piece_moved
         self.movelog.append(move) # Add to log
         self.white_to_move = not self.white_to_move # Swap turn
+
+
+    def undo_move(self):
+        if len(self.movelog) != 0:
+            move = self.movelog.pop()
+            self.board[move.start_row][move.start_col] = move.piece_moved
+            self.board[move.end_row][move.end_col] = move.piece_captured
+            self.white_to_move = not self.white_to_move
 
 
 class Move():
