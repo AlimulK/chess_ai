@@ -72,6 +72,7 @@ def main() -> None:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 running = False
+            # Mouse input handling
             elif e.type == pg.MOUSEBUTTONDOWN:
                 location = pg.mouse.get_pos()
                 col = location[0] // SQ_SIZE
@@ -87,6 +88,10 @@ def main() -> None:
                     gs.make_move(move)
                     sq_selected = () # Reset
                     player_clicks = [] # Reset
+            # Keyboard input handling
+            elif e.type == pg.KEYDOWN:
+                if e.key == pg.K_z: # Z is undo button
+                    gs.undo_move()
 
         draw_gamestate(screen, gs)
         clock.tick(FPS)
