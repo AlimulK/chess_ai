@@ -20,14 +20,14 @@ def load_images() -> None:
 
     for piece in pieces:
         IMAGES[piece] = pg.transform.scale(pg.image.load("images/" + piece + ".png"),
-        (SQ_SIZE, SQ_SIZE))
+                                           (SQ_SIZE, SQ_SIZE))
 
 
 def draw_gamestate(screen: pg.Surface, gs: chess_engine.GameState) -> None:
     """Draw onto the screen the entire current game"""
 
-    draw_board(screen) # draw the chessboard
-    draw_pieces(screen, gs.board) # draw the chesspieces on the board
+    draw_board(screen)  # draw the chessboard
+    draw_pieces(screen, gs.board)  # draw the chess pieces on the board
 
 
 def draw_board(screen: pg.Surface) -> None:
@@ -37,11 +37,11 @@ def draw_board(screen: pg.Surface) -> None:
     so just need to modulo 2 to check if a square is odd or even and then colour it in
     """
 
-    colours = [pg.Color("white"), pg.Color("gray")] # TODO make this configurable
+    colours = [pg.Color("white"), pg.Color("gray")]  # TODO make this configurable
     for i in range(DIMENSION):
         for j in range(DIMENSION):
             colour = colours[((i + j) % 2)]
-            pg.draw.rect(screen, colour, pg.Rect(j*SQ_SIZE, i*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            pg.draw.rect(screen, colour, pg.Rect(j * SQ_SIZE, i * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 
 def draw_pieces(screen: pg.Surface, board) -> None:
@@ -51,11 +51,11 @@ def draw_pieces(screen: pg.Surface, board) -> None:
         for j in range(DIMENSION):
             piece = board[i][j]
             if piece != "--":
-                screen.blit(IMAGES[piece], pg.Rect(j*SQ_SIZE, i*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+                screen.blit(IMAGES[piece], pg.Rect(j * SQ_SIZE, i * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 
 def main() -> None:
-    """The main method, the actual runable function"""
+    """The main method, the actual runnable function"""
 
     pg.init()
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -63,10 +63,10 @@ def main() -> None:
     clock = pg.time.Clock()
     screen.fill(pg.Color("white"))
     gs = chess_engine.GameState()
-    load_images() # Image loading is expensive so only do once
+    load_images()  # Image loading is expensive so only do once
     running = True
-    sq_selected = () # Keeps track of the last click
-    player_clicks = [] # Keeps track of the last clicks
+    sq_selected = ()  # Keeps track of the last click
+    player_clicks = []  # Keeps track of the last clicks
 
     while running:
         for e in pg.event.get():
@@ -77,7 +77,7 @@ def main() -> None:
                 location = pg.mouse.get_pos()
                 col = location[0] // SQ_SIZE
                 row = location[1] // SQ_SIZE
-                if sq_selected == (row, col): # Same square, deselect
+                if sq_selected == (row, col):  # Same square, deselect
                     sq_selected = ()
                     player_clicks = []
                 else:
@@ -86,16 +86,17 @@ def main() -> None:
                 if len(player_clicks) == 2:
                     move = chess_engine.Move(player_clicks[0], player_clicks[1], gs.board)
                     gs.make_move(move)
-                    sq_selected = () # Reset
-                    player_clicks = [] # Reset
+                    sq_selected = ()  # Reset
+                    player_clicks = []  # Reset
             # Keyboard input handling
             elif e.type == pg.KEYDOWN:
-                if e.key == pg.K_z: # Z is undo button
+                if e.key == pg.K_z:  # Z is undo button
                     gs.undo_move()
 
         draw_gamestate(screen, gs)
         clock.tick(FPS)
         pg.display.flip()
+
 
 if __name__ == "__main__":
     main()
