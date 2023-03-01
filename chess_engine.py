@@ -6,7 +6,7 @@ import numpy as np
 
 
 class GameState:
-    """Class for the game state."""
+    """Class for the game state"""
 
     def __init__(self):
         """Sets up the board, whose move it is and a movelog
@@ -33,6 +33,7 @@ class GameState:
 
     def make_move(self, move):
         """This doesn't work for special moves, like castling or en passant"""
+
         self.board[move.start_row][move.start_col] = "--"
         self.board[move.end_row][move.end_col] = move.piece_moved
         self.movelog.append(move)  # Add to log
@@ -44,6 +45,63 @@ class GameState:
             self.board[move.start_row][move.start_col] = move.piece_moved
             self.board[move.end_row][move.end_col] = move.piece_captured
             self.white_to_move = not self.white_to_move
+
+    def all_moves(self):
+        """All moves that are possible, following the rules"""
+
+        moves = []
+        for r in range(len(self.board)): # Rows
+            for c in range(len(self.board[r])): # Cols
+                turn = self.board[r][c][0]
+                if (turn == "w" and self.white_to_move) and (turn == "b" and not self.white_to_move):
+                    piece = self.board[r][c][1]
+                    if piece == "P":
+                        self.pawn_move(r, c, moves)
+                    elif piece == "R":
+                        self.rook_move(r, c, moves)
+                    elif piece == "N":
+                        self.knight_move(r, c, moves)
+                    elif piece == "B":
+                        self.bishop_move(r, c, moves)
+                    elif piece == "Q":
+                        self.queen_move(r, c, moves)
+                    elif piece == "K":
+                        self.king_move(r, c, moves)
+
+    def pawn_moves(self, r, c, moves):
+        """The valid moves a pawn can make"""
+
+        pass
+
+    def rook_moves(self, r, c, moves):
+        """The valid moves a rook can make"""
+
+        pass
+
+    def knight_moves(self, r, c, moves):
+        """The valid moves a knight can make"""
+
+        pass
+
+    def bishop_moves(self, r, c, moves):
+        """The valid moves a bishop can make"""
+
+        pass
+
+    def queen_moves(self, r, c, moves):
+        """The valid moves a queen can make"""
+
+        pass
+
+    def king_moves(self, r, c, moves):
+        """The valid moves a king can make"""
+
+        pass
+
+    def check_moves(self):
+        """All moves taking check into consideration"""
+
+        return self.all_moves()  # TODO Do what the docstring says
 
 
 class Move:
