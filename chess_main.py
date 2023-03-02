@@ -63,8 +63,10 @@ def main() -> None:
     clock = pg.time.Clock()
     screen.fill(pg.Color("white"))
     gs = chess_engine.GameState()
+    valid_moves: list = gs.check_moves()
+    move_made: bool = False
     load_images()  # Image loading is expensive so only do once
-    running = True
+    running: bool = True
     sq_selected = ()  # Keeps track of the last click
     player_clicks = []  # Keeps track of the last clicks
 
@@ -85,14 +87,21 @@ def main() -> None:
                     player_clicks.append(sq_selected)
                 if len(player_clicks) == 2:
                     move = chess_engine.Move(player_clicks[0], player_clicks[1], gs.board)
-                    gs.make_move(move)
+                    print(move.get_chess_notation())
+                    if move in valid_moves:
+                        gs.make_move(move)
+                        move_made = True
                     sq_selected = ()  # Reset
                     player_clicks = []  # Reset
             # Keyboard input handling
             elif e.type == pg.KEYDOWN:
                 if e.key == pg.K_z:  # Z is undo button
                     gs.undo_move()
+                    move_made = True
 
+        if move_made:
+            valid_moves = gs.check_moves()
+            move_made = False
         draw_gamestate(screen, gs)
         clock.tick(FPS)
         pg.display.flip()
