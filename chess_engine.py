@@ -53,7 +53,7 @@ class GameState:
         for r in range(len(self.board)):  # Rows
             for c in range(len(self.board[r])):  # Cols
                 turn = self.board[r][c][0]
-                if (turn == "w" and self.white_to_move) and (turn == "b" and not self.white_to_move):
+                if (turn == "w" and self.white_to_move) or (turn == "b" and not self.white_to_move):
                     piece = self.board[r][c][1]
                     if piece == "P":
                         self.pawn_move(r, c, moves)
@@ -73,7 +73,11 @@ class GameState:
     def pawn_move(self, r, c, moves):
         """The valid moves a pawn can make"""
 
-        pass
+        if self.white_to_move:
+            if self.board[r-1][c] == "--":
+                moves.append(Move((r, c), (r-1, c), self.board))
+                if r == 6 and self.board[r-2][c] == "--":  # 6 to check it is he first move
+                    moves.append(Move((r, c), (r-2, c), self.board))
 
     def rook_move(self, r, c, moves):
         """The valid moves a rook can make"""
