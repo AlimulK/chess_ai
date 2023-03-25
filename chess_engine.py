@@ -98,11 +98,33 @@ class GameState:
         :return:
         """
 
-        if self.white_to_move:  # Checks it's your turn
+        if self.white_to_move:  # Checks its white's turn to move
             if self.board[r - 1][c] == "--":  # Checks square in front is empty
                 moves.append(Move((r, c), (r - 1, c), self.board))
                 if r == 6 and self.board[r - 2][c] == "--":  # 6 to check it is he first move
                     moves.append(Move((r, c), (r - 2, c), self.board))
+
+            if c - 1 >= 0:  # Capturing diagonally to the left
+                if self.board[r - 1][c - 1][0] == "b":
+                    moves.append(Move((r, c), (r - 1, c - 1), self.board))
+
+            if c + 1 <= 7:  # Capturing diagonally to the right
+                if self.board[r - 1][c + 1][0] == "b":
+                    moves.append(Move((r, c), (r - 1, c + 1), self.board))
+
+        else:  # Black's turn to move
+            if self.board[r + 1][c] == "--":  # Checks square is empty
+                moves.append(Move((r, c), (r + 1, c), self.board))
+                if r == 1 and self.board[r + 2][c] == "--":
+                    moves.append(Move((r, c), (r + 2, c), self.board))
+
+            if c - 1 >= 0:  # Capturing diagonally to the left
+                if self.board[r + 1][c - 1][0] == "w":
+                    moves.append(Move((r, c), (r + 1, c - 1), self.board))
+
+            if c + 1 <= 7:  # Capturing diagonally to the right
+                if self.board[r + 1][c + 1][0] == "w":
+                    moves.append(Move((r, c), (r + 1, c + 1), self.board))
 
     def rook_move(self, r, c, moves):
         """The valid moves a rook can make"""
