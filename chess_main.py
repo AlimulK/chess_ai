@@ -1,8 +1,10 @@
-"""Responsible for user input and displaying the current GameState,
+"""
+Responsible for user input and displaying the current GameState,
 basically the user's interface with the game
 """
 # Imports
 import pygame as pg
+
 import chess_engine
 
 # Constants
@@ -14,7 +16,11 @@ IMAGES = {}
 
 
 def load_images() -> None:
-    """Fill the IMAGES dictionary with the pieces"""
+    """
+    Fills the IMAGES dictionary with images of the pieces.
+
+    :return:
+    """
 
     pieces = ["wP", "bP", "wR", "bR", "wN", "bN", "wB", "bB", "wQ", "bQ", "wK", "bK"]
 
@@ -24,17 +30,27 @@ def load_images() -> None:
 
 
 def draw_gamestate(screen: pg.Surface, gs: chess_engine.GameState) -> None:
-    """Draw onto the screen the entire current game"""
+    """
+    Draw the entire game state onto the screen.
+
+    :param screen: The pygame surface that will be drawn upon.
+    :param gs: The game state, so that we know where the pieces are.
+    :return:
+    """
 
     draw_board(screen)  # draw the chessboard
     draw_pieces(screen, gs.board)  # draw the chess pieces on the board
 
 
 def draw_board(screen: pg.Surface) -> None:
-    """Draw the squares of the board onto the screen
-    
+    """
+    Draw the squares of the board onto the screen.
+
     The light squares will be even, 0 is even, and the dark squares are all odd,
-    so just need to modulo 2 to check if a square is odd or even and then colour it in
+    so just need to modulo 2 to check if a square is odd or even and then colour it in.
+
+    :param screen: The pygame surface that gets drawn on.
+    :return:
     """
 
     colours = [pg.Color("white"), pg.Color("gray")]  # TODO make this configurable
@@ -45,7 +61,13 @@ def draw_board(screen: pg.Surface) -> None:
 
 
 def draw_pieces(screen: pg.Surface, board) -> None:
-    """Draw the pieces onto the board"""
+    """
+    Draw the pieces onto the board.
+
+    :param screen: The pygame surface it draws the pieces on, a layer above board.
+    :param board: The board pygame surface.
+    :return:
+    """
 
     for i in range(DIMENSION):
         for j in range(DIMENSION):
@@ -55,7 +77,11 @@ def draw_pieces(screen: pg.Surface, board) -> None:
 
 
 def main() -> None:
-    """The main method, the actual runnable function"""
+    """
+    The main method. the actual runnable function.
+
+    :return:
+    """
 
     pg.init()
     screen = pg.display.set_mode((WIDTH, HEIGHT))
