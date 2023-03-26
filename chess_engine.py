@@ -73,22 +73,23 @@ class GameState:
                 turn = self.board[r][c][0]
                 if (turn == "w" and self.white_to_move) or (turn == "b" and not self.white_to_move):
                     piece = self.board[r][c][1]
-                    if piece == "P":
-                        self.pawn_move(r, c, moves)
-                    elif piece == "R":
-                        self.rook_move(r, c, moves)
-                    elif piece == "N":
-                        self.knight_move(r, c, moves)
-                    elif piece == "B":
-                        self.bishop_move(r, c, moves)
-                    elif piece == "Q":
-                        self.queen_move(r, c, moves)
-                    elif piece == "K":
-                        self.king_move(r, c, moves)
+                    match piece:
+                        case "P":
+                            self.pawn_move(r, c, moves)
+                        case "R":
+                            self.rook_move(r, c, moves)
+                        case "N":
+                            self.knight_move(r, c, moves)
+                        case "B":
+                            self.bishop_move(r, c, moves)
+                        case "Q":
+                            self.queen_move(r, c, moves)
+                        case "K":
+                            self.king_move(r, c, moves)
 
         return moves
 
-    def pawn_move(self, r, c, moves):
+    def pawn_move(self, r: int, c: int, moves: list):
         """
         The valid moves a pawn can make.
 
@@ -126,27 +127,32 @@ class GameState:
                 if self.board[r + 1][c + 1][0] == "w":
                     moves.append(Move((r, c), (r + 1, c + 1), self.board))
 
-    def rook_move(self, r, c, moves):
-        """The valid moves a rook can make"""
+    def rook_move(self, r: int, c: int, moves: list):
+        """
+        The valid moves a rook can make.
 
-        pass
+        :param r: The number representing the row.
+        :param c: The number representing the column.
+        :param moves: The array holding all the moves.
+        :return:
+        """
 
-    def knight_move(self, r, c, moves):
+    def knight_move(self, r: int, c: int, moves: list):
         """The valid moves a knight can make"""
 
         pass
 
-    def bishop_move(self, r, c, moves):
+    def bishop_move(self, r: int, c: int, moves: list):
         """The valid moves a bishop can make"""
 
         pass
 
-    def queen_move(self, r, c, moves):
+    def queen_move(self, r: int, c: int, moves: list):
         """The valid moves a queen can make"""
 
         pass
 
-    def king_move(self, r, c, moves):
+    def king_move(self, r: int, c: int, moves: list):
         """The valid moves a king can make"""
 
         pass
