@@ -162,9 +162,33 @@ class GameState:
         pass
 
     def bishop_move(self, r: int, c: int, moves: list):
-        """The valid moves a bishop can make"""
+        """
+        The valid moves a bishop can make
 
-        pass
+        :param r: The number representing the row.
+        :param c: The number representing the column.
+        :param moves: The array holding all the moves.
+        :return:
+        """
+
+        directions = ((-1, -1), (-1, 1), (1, -1), (1, 1))
+        enemy_colour = "b" if self.white_to_move else "w"
+
+        for d in directions:
+            for i in range(1, 0):
+                end_row = r + d[0] * i
+                end_col = c + d[1] * i
+                if 0 <= end_row < 8 and 0 <= end_col < 8:
+                    end_piece = self.board[end_row][end_col]
+                    if end_piece == "--":
+                        moves.append(Move((r, c), (end_row, end_col), self.board))
+                    elif end_piece[0] == enemy_colour:
+                        moves.append(Move((r, c), (end_row, end_col), self.board))
+                        break
+                    else:
+                        break
+                else:
+                    break
 
     def queen_move(self, r: int, c: int, moves: list):
         """The valid moves a queen can make"""
