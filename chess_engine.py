@@ -157,9 +157,25 @@ class GameState:
                     break
 
     def knight_move(self, r: int, c: int, moves: list):
-        """The valid moves a knight can make"""
+        """
+        The valid moves a knight can make
 
-        pass
+        :param r: The number representing the row.
+        :param c: The number representing the column.
+        :param moves: The array holding all the moves.
+        :return:
+        """
+
+        knight_moves = ((-2, -1), (-2, 1), (2, -1), (2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2))
+        ally_colour = "w" if self.white_to_move else "b"
+
+        for m in knight_moves:
+            end_row = r + m[0]
+            end_col = c + m[1]
+            if 0 <= end_row < 8 and 0 <= end_col < 8:
+                end_piece = self.board[end_row][end_col]
+                if end_piece[0] != ally_colour:
+                    moves.append(Move((r, c), (end_row, end_col), self.board))
 
     def bishop_move(self, r: int, c: int, moves: list):
         """
