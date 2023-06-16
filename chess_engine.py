@@ -207,9 +207,17 @@ class GameState:
                     break
 
     def queen_move(self, r: int, c: int, moves: list):
-        """The valid moves a queen can make"""
+        """
+        The valid moves a queen can make
 
-        pass
+        :param r: The number representing the row.
+        :param c: The number representing the column.
+        :param moves: The array holding all the moves.
+        :return:
+        """
+
+        self.rook_move(r, c, moves)
+        self.bishop_move(r, c, moves)  # queen is basically just rook + bishop
 
     def king_move(self, r: int, c: int, moves: list):
         """The valid moves a king can make"""
