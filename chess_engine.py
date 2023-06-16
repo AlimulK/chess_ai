@@ -220,9 +220,25 @@ class GameState:
         self.bishop_move(r, c, moves)  # queen is basically just rook + bishop
 
     def king_move(self, r: int, c: int, moves: list):
-        """The valid moves a king can make"""
+        """
+        The valid moves a king can make
 
-        pass
+        :param r: The number representing the row.
+        :param c: The number representing the column.
+        :param moves: The array holding all the moves.
+        :return:
+        """
+
+        king_moves = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
+        ally_colour = "w" if self.white_to_move else "b"
+        
+        for i in range(8):
+            end_row = r + king_moves[i][0]
+            end_col = c + king_moves[i][1]
+            if 0 <= end_row < 8 and 0 <= end_col < 8:
+                end_piece = self.board[end_row][end_col]
+                if end_piece[0] != ally_colour:
+                    moves.append(Move((r, c), (end_row, end_col), self.board))
 
     def check_moves(self):
         """All moves taking check into consideration"""
