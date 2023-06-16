@@ -191,7 +191,7 @@ class GameState:
         enemy_colour = "b" if self.white_to_move else "w"
 
         for d in directions:
-            for i in range(1, 0):
+            for i in range(1, 8):
                 end_row = r + d[0] * i
                 end_col = c + d[1] * i
                 if 0 <= end_row < 8 and 0 <= end_col < 8:
@@ -231,7 +231,7 @@ class GameState:
 
         king_moves = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
         ally_colour = "w" if self.white_to_move else "b"
-        
+
         for i in range(8):
             end_row = r + king_moves[i][0]
             end_col = c + king_moves[i][1]
