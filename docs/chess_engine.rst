@@ -12,6 +12,21 @@ GameState
 
 .. autofunction:: chess_engine.GameState.all_moves
 
+Valid Moves
+^^^^^^^^^^^
+
+.. autofunction:: chess_engine.GameState.pawn_move
+
+.. autofunction:: chess_engine.GameState.knight_move
+
+.. autofunction:: chess_engine.GameState.rook_move
+
+.. autofunction:: chess_engine.GameState.bishop_move
+
+.. autofunction:: chess_engine.GameState.queen_move
+
+.. autofunction:: chess_engine.GameState.king_move
+
 
 Move
 ----
