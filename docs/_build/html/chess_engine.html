@@ -14,6 +14,7 @@
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main" href="chess_main.html" />
     <link rel="prev" title="Welcome to Chess’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -72,6 +73,117 @@
 </dl>
 </dd></dl>
 
+<section id="valid-moves">
+<h3>Valid Moves<a class="headerlink" href="#valid-moves" title="Permalink to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.pawn_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">pawn_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.pawn_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a pawn can make.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.knight_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">knight_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.knight_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a knight can make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.rook_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">rook_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.rook_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a rook can make.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.bishop_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">bishop_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.bishop_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a bishop can make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.queen_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">queen_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.queen_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a queen can make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chess_engine.GameState.king_move">
+<span class="sig-prename descclassname"><span class="pre">chess_engine.GameState.</span></span><span class="sig-name descname"><span class="pre">king_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chess_engine.GameState.king_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid moves a king can make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The number representing the row.</p></li>
+<li><p><strong>c</strong> – The number representing the column.</p></li>
+<li><p><strong>moves</strong> – The array holding all the moves.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 <section id="move">
 <h2>Move<a class="headerlink" href="#move" title="Permalink to this heading">¶</a></h2>
@@ -112,6 +224,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#chess_engine.GameState.make_move"><code class="docutils literal notranslate"><span class="pre">make_move()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#chess_engine.GameState.undo_move"><code class="docutils literal notranslate"><span class="pre">undo_move()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#chess_engine.GameState.all_moves"><code class="docutils literal notranslate"><span class="pre">all_moves()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#valid-moves">Valid Moves</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.pawn_move"><code class="docutils literal notranslate"><span class="pre">pawn_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.knight_move"><code class="docutils literal notranslate"><span class="pre">knight_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.rook_move"><code class="docutils literal notranslate"><span class="pre">rook_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.bishop_move"><code class="docutils literal notranslate"><span class="pre">bishop_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.queen_move"><code class="docutils literal notranslate"><span class="pre">queen_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chess_engine.GameState.king_move"><code class="docutils literal notranslate"><span class="pre">king_move()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#move">Move</a><ul>
@@ -120,6 +241,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="chess_main.html">Main</a></li>
 </ul>
 
 <div class="relations">
@@ -127,6 +249,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Welcome to Chess’s documentation!</a></li>
+      <li>Next: <a href="chess_main.html" title="next chapter">Main</a></li>
   </ul></li>
 </ul>
 </div>

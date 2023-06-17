@@ -35,6 +35,10 @@ class GameState:
 
         self.movelog: list = []
 
+        self.white_king_loc = (7, 4)
+
+        self.black_king_loc = (0, 4)
+
     def make_move(self, move):
         """
         The method that actual moves the pieces on the board, doesn't work for special moves like castling
@@ -47,6 +51,11 @@ class GameState:
         self.board[move.end_row][move.end_col] = move.piece_moved
         self.movelog.append(move)  # Add to log
         self.white_to_move = not self.white_to_move  # Swap turn
+        # Update the king's location if it was moved
+        if move.piece_moved == "wK":
+            self.white_king_loc = (move.end_row, move.end_col)
+        if move.piece_moved == "bK":
+            self.black_king_loc = (move.end_row, move.end_col)
 
     def undo_move(self):
         """
@@ -59,6 +68,10 @@ class GameState:
             self.board[move.start_row][move.start_col] = move.piece_moved
             self.board[move.end_row][move.end_col] = move.piece_captured
             self.white_to_move = not self.white_to_move
+            if move.piece_moved == "wK":
+                self.white_king_loc = (move.start_row, move.start_col)
+            if move.piece_moved == "bK":
+                self.black_king_loc = (move.start_row, move.start_col)
 
     def all_moves(self):
         """
