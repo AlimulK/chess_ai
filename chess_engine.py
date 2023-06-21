@@ -18,6 +18,7 @@ class GameState:
         Sets up the board as a 8x8 Numpy 2d array. Each piece is represented by 2 characters,
         the first character represents the colour, second character represents piece:
         R = Rook, N = Knight, B = Bishop, Q = Queen and K = King. -- represents empty space.
+        :return:
         """
 
         self.board = np.array([
@@ -73,9 +74,43 @@ class GameState:
             if move.piece_moved == "bK":
                 self.black_king_loc = (move.start_row, move.start_col)
 
+    def valid_moves(self):
+        """
+        All the possible moves, with checking for check.
+
+        :return: The array holding the moves made.
+        """
+        moves = self.all_moves()
+
+        for i in range(len(moves) - 1, -1, -1):
+            # when removing from a list go back through the list
+            self.make_move(moves[i])
+
+        return moves
+
+    def in_check(self):
+        """
+        Checks if the current player king is in check.
+
+        :return:
+        """
+        
+        pass
+
+    def square_attacked(self, r, c):
+        """
+        Checks if the enemy can attack square r, c.
+
+        :param r: The row number of the square
+        :param c: The column number of the square
+        :return:
+        """
+
+        pass
+
     def all_moves(self):
         """
-        All the possible moves, within the rules of chess.
+        All the possible moves, without checking for check.
 
         :return: The array holding the moves made.
         """
