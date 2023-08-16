@@ -50,8 +50,16 @@ Now simply run `chess_main.py`:
 python chess_main.py
 ```
 
+## Metadata
+
 ### Documentation
 
-All the documentation is within the docs folder and was generated using `Sphinx 6.1.3`.
-The generated HTML is within `./docs/build/html`.
+All the documentation is within the docs folder and was generated using `Sphinx 6.1.3`
 
+The generated HTML is within `./docs/build/html`
+
+### Credits
+
+All code written by me
+
+Chess Pieces by Cburnett - https://commons.wikimedia.org/w/index.php?curid=1499803
