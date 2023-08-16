@@ -92,21 +92,32 @@ class GameState:
         """
         Checks if the current player king is in check.
 
-        :return:
+        :return: Whether the square the king is on is attacked or not.
         """
-        
-        pass
 
-    def square_attacked(self, r, c):
+        if self.white_to_move:
+            return self.square_attacked(self.white_king_loc[0], self.white_king_loc[1])
+        else:
+            return self.square_attacked(self.black_king_loc[0], self.black_king_loc[1])
+
+    def square_attacked(self, r: int, c: int):
         """
         Checks if the enemy can attack square r, c.
 
         :param r: The row number of the square
         :param c: The column number of the square
-        :return:
+        :return: Whether a particular square is under attack or not.
         """
 
-        pass
+        self.white_to_move = not self.white_to_move  # Switch turn (temporary)
+        opp_moves = self.all_moves()
+
+        self.white_to_move = not self.white_to_move  # Switch back
+
+        for move in opp_moves:
+            if move.end_row == r and move.end_col == c:  # Square is under attack
+                return True
+        return False  # Redundant but more readable
 
     def all_moves(self):
         """
