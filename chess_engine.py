@@ -32,12 +32,22 @@ class GameState:
             ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
         ])
 
+        self.move_functions = {
+            "P": self.pawn_move,
+            "R": self.rook_move,
+            "N": self.knight_move,
+            "B": self.bishop_move,
+            "Q": self.queen_move,
+            "K": self.king_move
+        }
+
+        # Who's turn
         self.white_to_move: bool = True
 
         self.movelog: list = []
 
+        # King pieces' locations
         self.white_king_loc = (7, 4)
-
         self.black_king_loc = (0, 4)
 
     def make_move(self, move):
@@ -55,7 +65,7 @@ class GameState:
         # Update the king's location if it was moved
         if move.piece_moved == "wK":
             self.white_king_loc = (move.end_row, move.end_col)
-        if move.piece_moved == "bK":
+        elif move.piece_moved == "bK":
             self.black_king_loc = (move.end_row, move.end_col)
 
     def undo_move(self):
@@ -69,9 +79,10 @@ class GameState:
             self.board[move.start_row][move.start_col] = move.piece_moved
             self.board[move.end_row][move.end_col] = move.piece_captured
             self.white_to_move = not self.white_to_move
+            # Update the king's location
             if move.piece_moved == "wK":
                 self.white_king_loc = (move.start_row, move.start_col)
-            if move.piece_moved == "bK":
+            elif move.piece_moved == "bK":
                 self.black_king_loc = (move.start_row, move.start_col)
 
     def valid_moves(self):
@@ -81,11 +92,13 @@ class GameState:
         :return: The array holding the moves made.
         """
         moves = self.all_moves()
-
-        for i in range(len(moves) - 1, -1, -1):
-            # when removing from a list go back through the list
+        for i in range(len(moves) - 1, -1, -1):  # going back through the list
             self.make_move(moves[i])
-
+            self.white_to_move = not self.white_to_move
+            if self.in_check():
+                moves.remove(moves[i])
+            self.white_to_move = not self.white_to_move
+            self.undo_move()
         return moves
 
     def in_check(self):
@@ -111,13 +124,11 @@ class GameState:
 
         self.white_to_move = not self.white_to_move  # Switch turn (temporary)
         opp_moves = self.all_moves()
-
         self.white_to_move = not self.white_to_move  # Switch back
-
         for move in opp_moves:
             if move.end_row == r and move.end_col == c:  # Square is under attack
                 return True
-        return False  # Redundant but more readable
+        return False
 
     def all_moves(self):
         """
@@ -132,19 +143,7 @@ class GameState:
                 turn = self.board[r][c][0]
                 if (turn == "w" and self.white_to_move) or (turn == "b" and not self.white_to_move):
                     piece = self.board[r][c][1]
-                    match piece:
-                        case "P":
-                            self.pawn_move(r, c, moves)
-                        case "R":
-                            self.rook_move(r, c, moves)
-                        case "N":
-                            self.knight_move(r, c, moves)
-                        case "B":
-                            self.bishop_move(r, c, moves)
-                        case "Q":
-                            self.queen_move(r, c, moves)
-                        case "K":
-                            self.king_move(r, c, moves)
+                    self.move_functions[piece](r, c, moves)
 
         return moves
 
@@ -298,11 +297,6 @@ class GameState:
                 end_piece = self.board[end_row][end_col]
                 if end_piece[0] != ally_colour:
                     moves.append(Move((r, c), (end_row, end_col), self.board))
-
-    def check_moves(self):
-        """All moves taking check into consideration"""
-
-        return self.all_moves()  # TODO Do what the docstring says
 
 
 class Move:
