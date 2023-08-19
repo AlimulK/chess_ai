@@ -50,6 +50,10 @@ class GameState:
         self.white_king_loc = (7, 4)
         self.black_king_loc = (0, 4)
 
+        # Checkmate and Stalemate bools
+        self.checkmate: bool = False
+        self.stalemate: bool = False
+
     def make_move(self, move):
         """
         The method that actual moves the pieces on the board, doesn't work for special moves like castling
@@ -99,6 +103,16 @@ class GameState:
                 moves.remove(moves[i])
             self.white_to_move = not self.white_to_move
             self.undo_move()
+
+        if len(moves) == 0:  # Checkmate or Stalemate
+            if self.in_check():
+                self.checkmate = True
+            else:
+                self.stalemate = True
+        else:
+            self.checkmate = False
+            self.stalemate = False
+
         return moves
 
     def in_check(self):
