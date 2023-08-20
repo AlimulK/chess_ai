@@ -114,13 +114,14 @@ def main() -> None:
                     player_clicks.append(sq_selected)
                 if len(player_clicks) == 2:
                     move = chess_engine.Move(player_clicks[0], player_clicks[1], gs.board)
-                    if move in valid_moves:
-                        gs.make_move(move)
-                        print(move.get_chess_notation())
-                        move_made = True
-                        sq_selected = ()  # Reset
-                        player_clicks = []  # Reset
-                    else:
+                    for i in range(len(valid_moves)):
+                        if move == valid_moves[i]:
+                            gs.make_move(valid_moves[i])
+                            print(move.get_chess_notation())
+                            move_made = True
+                            sq_selected = ()  # Reset
+                            player_clicks = []  # Reset
+                    if not move_made:
                         player_clicks = [sq_selected]
             # Keyboard input handling
             elif e.type == pg.KEYDOWN:
