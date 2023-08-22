@@ -338,13 +338,18 @@ class Move:
         :param board: The chessboard.
         """
 
-        self.start_row = start_sq[0]
-        self.start_col = start_sq[1]
-        self.end_row = end_sq[0]
-        self.end_col = end_sq[1]
+        self.start_row: int = start_sq[0]
+        self.start_col: int = start_sq[1]
+        self.end_row: int = end_sq[0]
+        self.end_col: int = end_sq[1]
         self.piece_moved = board[self.start_row][self.start_col]
         self.piece_captured = board[self.end_row][self.end_col]
         self.move_id = self.start_row * 1000 + self.start_col * 100 + self.end_row * 10 + self.end_col
+        self.pawn_promotion: bool = False
+
+        if ((self.piece_moved == "wP" and self.end_row == 0)
+                or (self.piece_moved == "bP" and self.end_row == 7)):
+            self.pawn_promotion = True
 
     def __eq__(self, other):
         """
