@@ -72,6 +72,10 @@ class GameState:
         elif move.piece_moved == "bK":
             self.black_king_loc = (move.end_row, move.end_col)
 
+        # Pawn promotion to Queen
+        if move.pawn_promotion:
+            self.board[move.end_row][move.end_col] = move.piece_moved[0] + "Q"
+
     def undo_move(self):
         """
         Undoes the move.
