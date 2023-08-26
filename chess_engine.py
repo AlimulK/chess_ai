@@ -54,6 +54,9 @@ class GameState:
         self.checkmate: bool = False
         self.stalemate: bool = False
 
+        # Enpassant tuple
+        self.enpassant_possible = ()
+
     def make_move(self, move):
         """
         The method that actual moves the pieces on the board, doesn't work for special moves like castling
@@ -76,6 +79,16 @@ class GameState:
         if move.pawn_promotion:
             self.board[move.end_row][move.end_col] = move.piece_moved[0] + "Q"
 
+        # Pawn enpassant
+        if move.enpassant_move:
+            self.board[move.start_row][move.end_col] = "--"
+
+        # Update enpassant_possible
+        if move.piece_moved[1] == "P" and (abs(move.start_row - move.end_row) == 2):
+            self.enpassant_possible = ((move.start_row + move.end_row) // 2, move.start_col)
+        else:
+            self.enpassant_possible = ()
+
     def undo_move(self):
         """
         Undoes the move.
@@ -87,6 +100,16 @@ class GameState:
             self.board[move.start_row][move.start_col] = move.piece_moved
             self.board[move.end_row][move.end_col] = move.piece_captured
             self.white_to_move = not self.white_to_move
+
+            # Undo enpassant
+            if move.enpassant_move:
+                self.board[move.end_row][move.end_col] = "--"
+                self.board[move.start_row][move.start_col] = move.piece_captured
+                self.enpassant_possible = (move.end_row, move.end_col)
+
+            if move.piece_moved[1] == "P" and (abs(move.start_row - move.end_row) == 2):
+                self.enpassant_possible = ()
+
             # Update the king's location
             if move.piece_moved == "wK":
                 self.white_king_loc = (move.start_row, move.start_col)
@@ -99,6 +122,8 @@ class GameState:
 
         :return: The array holding the moves made.
         """
+        temp_enpassant_possible = self.enpassant_possible
+
         moves = self.all_moves()
         for i in range(len(moves) - 1, -1, -1):  # going back through the list
             self.make_move(moves[i])
@@ -116,6 +141,8 @@ class GameState:
         else:
             self.checkmate = False
             self.stalemate = False
+
+        self.enpassant_possible = temp_enpassant_possible
 
         return moves
 
@@ -184,10 +211,14 @@ class GameState:
             if c - 1 >= 0:  # Capturing diagonally to the left
                 if self.board[r - 1][c - 1][0] == "b":
                     moves.append(Move((r, c), (r - 1, c - 1), self.board))
+                elif (r - 1, c - 1) == self.enpassant_possible:
+                    moves.append(Move((r, c), (r - 1, c - 1), self.board, enpassant_move=True))
 
             if c + 1 <= 7:  # Capturing diagonally to the right
                 if self.board[r - 1][c + 1][0] == "b":
                     moves.append(Move((r, c), (r - 1, c + 1), self.board))
+                elif (r - 1, c + 1) == self.enpassant_possible:
+                    moves.append(Move((r, c), (r - 1, c + 1), self.board, enpassant_move=True))
 
         else:  # Black's turn to move
             if self.board[r + 1][c] == "--":  # Checks square is empty
@@ -198,10 +229,14 @@ class GameState:
             if c - 1 >= 0:  # Capturing diagonally to the left
                 if self.board[r + 1][c - 1][0] == "w":
                     moves.append(Move((r, c), (r + 1, c - 1), self.board))
+                elif (r + 1, c - 1) == self.enpassant_possible:
+                    moves.append(Move((r, c), (r + 1, c - 1), self.board, enpassant_move=True))
 
             if c + 1 <= 7:  # Capturing diagonally to the right
                 if self.board[r + 1][c + 1][0] == "w":
                     moves.append(Move((r, c), (r + 1, c + 1), self.board))
+                elif (r + 1, c + 1) == self.enpassant_possible:
+                    moves.append(Move((r, c), (r + 1, c + 1), self.board, enpassant_move=True))
 
     def rook_move(self, r: int, c: int, moves: list):
         """
@@ -333,13 +368,14 @@ class Move:
 
     cols_to_files = {v: k for k, v in files_to_cols.items()}
 
-    def __init__(self, start_sq: tuple[int, int], end_sq: tuple[int, int], board):
+    def __init__(self, start_sq: tuple[int, int], end_sq: tuple[int, int], board, enpassant_move=False):
         """
         Setting up the coordinate system.
 
         :param start_sq: The starting square (row and column).
         :param end_sq: The ending square (row and column).
         :param board: The chessboard.
+        :param enpassant_move: Whether a move is enpassant.
         """
 
         self.start_row: int = start_sq[0]
@@ -349,11 +385,15 @@ class Move:
         self.piece_moved = board[self.start_row][self.start_col]
         self.piece_captured = board[self.end_row][self.end_col]
         self.move_id = self.start_row * 1000 + self.start_col * 100 + self.end_row * 10 + self.end_col
-        self.pawn_promotion: bool = False
 
-        if ((self.piece_moved == "wP" and self.end_row == 0)
-                or (self.piece_moved == "bP" and self.end_row == 7)):
-            self.pawn_promotion = True
+        # Enpassant
+        self.enpassant_move = enpassant_move
+        if self.enpassant_move:
+            self.piece_captured = "wP" if self.piece_moved == "bP" else "bP"
+
+        # Pawn promo
+        self.pawn_promotion = ((self.piece_moved == "wP" and self.end_row == 0) or (
+                self.piece_moved == "bP" and self.end_row == 7))
 
     def __eq__(self, other):
         """
