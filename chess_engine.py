@@ -81,7 +81,7 @@ class GameState:
 
         # Pawn enpassant
         if move.enpassant_move:
-            self.board[move.start_row][move.end_col] = "--"
+            self.board[move.start_row][move.end_col] = "--"  # Captured
 
         # Update enpassant_possible
         if move.piece_moved[1] == "P" and (abs(move.start_row - move.end_row) == 2):
@@ -101,20 +101,21 @@ class GameState:
             self.board[move.end_row][move.end_col] = move.piece_captured
             self.white_to_move = not self.white_to_move
 
-            # Undo enpassant
-            if move.enpassant_move:
-                self.board[move.end_row][move.end_col] = "--"
-                self.board[move.start_row][move.start_col] = move.piece_captured
-                self.enpassant_possible = (move.end_row, move.end_col)
-
-            if move.piece_moved[1] == "P" and (abs(move.start_row - move.end_row) == 2):
-                self.enpassant_possible = ()
-
             # Update the king's location
             if move.piece_moved == "wK":
                 self.white_king_loc = (move.start_row, move.start_col)
             elif move.piece_moved == "bK":
                 self.black_king_loc = (move.start_row, move.start_col)
+
+            # Undo enpassant
+            if move.enpassant_move:
+                self.board[move.end_row][move.end_col] = "--"
+                self.board[move.start_row][move.end_col] = move.piece_captured
+                self.enpassant_possible = (move.end_row, move.end_col)
+
+            # Undo pawn 2 step
+            if move.piece_moved[1] == "P" and (abs(move.start_row - move.end_row) == 2):
+                self.enpassant_possible = ()
 
     def valid_moves(self):
         """
@@ -386,14 +387,14 @@ class Move:
         self.piece_captured = board[self.end_row][self.end_col]
         self.move_id = self.start_row * 1000 + self.start_col * 100 + self.end_row * 10 + self.end_col
 
+        # Pawn promo
+        self.pawn_promotion = (self.piece_moved == "wP" and self.end_row == 0) or (
+                self.piece_moved == "bP" and self.end_row == 7)
+
         # Enpassant
         self.enpassant_move = enpassant_move
         if self.enpassant_move:
             self.piece_captured = "wP" if self.piece_moved == "bP" else "bP"
-
-        # Pawn promo
-        self.pawn_promotion = ((self.piece_moved == "wP" and self.end_row == 0) or (
-                self.piece_moved == "bP" and self.end_row == 7))
 
     def __eq__(self, other):
         """
