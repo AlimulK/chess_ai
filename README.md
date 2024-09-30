@@ -65,6 +65,4 @@ The generated HTML is within `./docs/build/html`
 
 ### Credits
 
-All code written by me
-
 Chess Pieces by Cburnett - https://commons.wikimedia.org/w/index.php?curid=1499803
